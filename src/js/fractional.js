@@ -254,6 +254,7 @@ export class Fraction {
   clone() {
     return new Fraction(this.numerator, this.denominator);
   }
+
   /* pretty-printer, converts fractions into whole numbers and fractions */
   toString() {
     if (this.denominator === 'NaN') return 'NaN';
@@ -271,12 +272,14 @@ export class Fraction {
       );
     return result.length > 0 ? result.join(' ') : 0;
   }
+
   /* destructively rescale the fraction by some integral factor */
   rescale(factor) {
     this.numerator *= factor;
     this.denominator *= factor;
     return this;
   }
+
   add(b) {
     var a = this.clone();
     if (b instanceof Fraction) {
@@ -292,6 +295,7 @@ export class Fraction {
 
     return a.normalize();
   }
+
   subtract(b) {
     var a = this.clone();
     if (b instanceof Fraction) {
@@ -307,6 +311,7 @@ export class Fraction {
 
     return a.normalize();
   }
+
   multiply(b) {
     var a = this.clone();
     if (b instanceof Fraction) {
@@ -319,6 +324,7 @@ export class Fraction {
     }
     return a.normalize();
   }
+
   divide(b) {
     var a = this.clone();
     if (b instanceof Fraction) {
@@ -331,6 +337,7 @@ export class Fraction {
     }
     return a.normalize();
   }
+
   equals(b) {
     if (!(b instanceof Fraction)) {
       b = new Fraction(b);
@@ -341,7 +348,7 @@ export class Fraction {
     return a.numerator === b.numerator && a.denominator === b.denominator;
   }
 
-  normalize = (function () {
+  normalize() {
     var isFloat = function (n) {
       return (
         typeof n === 'number' &&
@@ -393,7 +400,7 @@ export class Fraction {
       }
       return this;
     };
-  })();
+  }
 }
 
 /* Utility functions */
