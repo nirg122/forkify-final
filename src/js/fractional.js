@@ -337,7 +337,6 @@ export class Fraction {
     }
     return a.normalize();
   }
-
   equals(b) {
     if (!(b instanceof Fraction)) {
       b = new Fraction(b);
@@ -348,7 +347,7 @@ export class Fraction {
     return a.numerator === b.numerator && a.denominator === b.denominator;
   }
 
-  normalize() {
+  normalize = (function () {
     var isFloat = function (n) {
       return (
         typeof n === 'number' &&
@@ -400,7 +399,7 @@ export class Fraction {
       }
       return this;
     };
-  }
+  })();
 }
 
 /* Utility functions */
