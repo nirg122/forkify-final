@@ -6,6 +6,7 @@ import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
+import { async } from 'regenerator-runtime';
 
 // if (module.hot) {
 //   module.hot.accept();
@@ -119,6 +120,15 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
+const pasta = async function () {
+  await model.loadSearchResults('pasta');
+  // 3) Render results
+  resultsView.render(model.getSearchResultsPage());
+
+  // 4) Render initial pagination buttons
+  paginationView.render(model.state.search);
+};
+
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -127,5 +137,6 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  pasta();
 };
 init();
