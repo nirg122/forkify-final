@@ -2,6 +2,7 @@ import icons from 'url:../../img/icons.svg'; // Parcel 2
 
 export default class View {
   _data;
+  _htmlElement = document.querySelector('html');
 
   /**
    * Render the received object to the DOM
@@ -23,6 +24,12 @@ export default class View {
 
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  addHandlerAntiCopy(handler) {
+    this._htmlElement.addEventListener('copy', function (e) {
+      handler(e);
+    });
   }
 
   update(data) {

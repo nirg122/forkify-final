@@ -6,11 +6,8 @@ import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
+import View from './views/View.js';
 import { async } from 'regenerator-runtime';
-
-// if (module.hot) {
-//   module.hot.accept();
-// }
 
 const controlRecipes = async function () {
   try {
@@ -53,7 +50,7 @@ const controlSearchResults = async function () {
     // 4) Render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
-    console.log(err);
+    resultsView.render(err);
   }
 };
 
@@ -96,7 +93,6 @@ const controlAddRecipe = async function (newRecipe) {
 
     // Upload the new recipe data
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     // Render recipe
     recipeView.render(model.state.recipe);
@@ -120,14 +116,13 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
-const pasta = async function () {
-  await model.loadSearchResults('pasta');
-  // 3) Render results
-  resultsView.render(model.getSearchResultsPage());
-
-  // 4) Render initial pagination buttons
-  paginationView.render(model.state.search);
+const antiCopying = function (e) {
+  e.preventDefault();
+  const selection = document.getSelection();
+  e.clipboardData.setData('text/plain', '');
 };
+
+const mainView = new View();
 
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
@@ -137,6 +132,7 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  pasta();
+  mainView.addHandlerAntiCopy(antiCopying);
 };
+
 init();
